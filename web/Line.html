@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+    <meta charset="utf-8">
+    <link rel="stylesheet"
+          href="bower_components/chartist/dist/chartist.min.css">
+    <title>Chartist | Simple line chart</title>
+</head>
+<body>
+<div class="ct-chart"></div>
+<script src="bower_components/chartist/dist/chartist.min.js"></script>
+<button onclick="update()">update</button>
+
+</body>
+
+<script>
+
+
+    var power = [];
+    var moments = [];
+    var i =0;
+    var intervalID = setInterval(function () {
+
+        $(document).ready(function () {
+            i++;
+            $.getJSON("http://localhost:5000/api/environment", function (data) {
+
+                wemoJson = (JSON.stringify(data));
+                parseddata = $.parseJSON(wemoJson);
+                var currentPower = data["WeMo Insight Wasp"]["currentpower"]
+                currentPower = currentPower / 1000
+                currentPower = Math.round(currentPower)
+                var time = moment().format("h:mm:ss").toString();
+                if(!(i%5)){
+                    moments.push(time)
+                    power.push(currentPower)
+                }
+                console.log(currentPower + ", " + time);
+                update();
+            });
+        });
+
+
+    }, 1000);
+
+    var data = {
+        labels: ['A', 'B', 'C'],
+        series: [[10, 8, 14]]
+    };
+
+
+    // As options we currently only set a static size of 300x200 px. We can also omit this and use aspect ratio containers
+    // as you saw in the previous example
+    var options = {
+        width: 1400,
+        height: 400
+    };
+
+    // Create a new line chart object where as first parameter we pass in a selector
+    // that is resolving to our chart container element. The Second parameter
+    // is the actual data object. As a third parameter we pass in our custom options.
+    new Chartist.Line('.ct-chart', data, options);
+
+    function update() {
+        var data = {
+            /*labels: [moments],*/
+            series: [power]
+        };
+        new Chartist.Line('.ct-chart', data, options);
+
+
+    }
+
+
+</script>
+</html>
