@@ -8,8 +8,7 @@ var bodyParser = require('body-parser');
 // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/test');
-var collection = db.get('usercollection');
+var db = monk('localhost:27017/wemo');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -24,6 +23,9 @@ var options = {
     , method: 'GET'
     , headers: {'Content-Type': 'application/json'}
 };
+
+var firstRun = true;
+var now;
 
 var app = express();
 
@@ -49,35 +51,67 @@ app.use('/', routes);
 app.use('/users', users);
 
 
-new CronJob('* * * * * *', function () {
-    var req = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        res.on('data', function (data) {
+try {
+    new CronJob('* * * * * *', function () {
 
-            var parse_obj = JSON.parse(data)
-            parse_obj.wemodishwasher.createdAt = new Date();
-            //console.log(parse_obj); // I can't parse it because, it's a string. why?
+        var req = http.request(options, function (res) {
+            res.setEncoding('utf8');
+            res.on('data', function (data) {
+                console.log("Http Statuscode is: " + res.statuscode);
+                if (res != undefined) {
+                    try {
+                        var wemoresponse = JSON.parse(data)
 
-            collection.insert(
-                parse_obj
-                , function (err, doc) {
-                    if (err) {
-                        // If it failed, return error
-                        console.log("There was a problem adding the information to the database." + err);
+                        wemoresponse.wemodishwasher.createdAt = new Date();
 
+
+                        if (wemoresponse.wemodishwasher.currentpower > 1000) {
+                            if (firstRun == true) {
+                                console.log("firstRun == true")
+                                now = new Date();
+                                firstRun = false;
+                            }
+                            console.log(now);
+                            var collection = db.get('wemorecord_' + now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear() + "_" + now.getHours() + ":" + now.getMinutes());
+                            collection.insert(
+                                wemoresponse
+                                , function (err, doc) {
+                                    if (err) {
+                                        // If it failed, return error
+                                        console.log("There was a problem adding the information to the database." + err);
+
+                                    }
+                                    else {
+                                        // And forward to success page
+                                        console.log("success");
+                                    }
+                                });
+
+                        }
+                        else {
+                            firstRun = true;
+                            console.log("firstRun set to True")
+                        }
                     }
-                    else {
-                        // And forward to success page
-                       // console.log("success");
+                    catch (e) {
+                        console.error("Error happend:  " + e);
                     }
-                });
+
+
+                }
+            });
+
         });
-    });
-    req.on('error', function (e) {
-        console.log('problem with request: ' + e.message);
-    });
-    req.end();
-}, null, true, null);
+
+        req.on('error', function (e) {
+            console.log('problem with request: ' + e.message);
+        });
+        req.end();
+    }, null, true, null);
+} catch (e) {
+
+    console.log("Error while receiving dishwasher data:  " + e)
+}
 
 
 /// catch 404 and forwarding to error handler
