@@ -1,7 +1,7 @@
 # dischwascher
 Dischwascher aims for monitoring a dishwasher machine and serve this information via a RESTful interface
 
-##Installation
+##Python Server "ouimeaux" - Installation
 * First of all, you need a WeMo Insight Switch by Belkin. Configure it via your mobile and check the basic functionality.
 * Download the open source library for interacting with the switch (https://github.com/iancmcc/ouimeaux) and follow installation instructions
 * In case you have a raspberry pi with raspian running, follow these steps
@@ -38,3 +38,28 @@ Dischwascher aims for monitoring a dishwasher machine and serve this information
 ```
 
 * And thats it :-)
+
+## NodeJS with Express and MongoDB - Installation
+
+* Install Node.js (https://nodejs.org/en/download/)
+    
+    `sudo apt-get install nodejs`
+
+* Install NPM (https://www.npmjs.com/)
+    
+    `sudo apt-get install npm`
+
+* Install express (http://expressjs.com/de/)
+
+    `sudo npm install -g express-generator`
+
+* Install MongoDB
+    `sudo apt-get install mongodb` and start with `sudo service mongodb start`
+    (Specify data directory if you want)
+
+* Clone this repository to your raspberry (e.g. ~/Development)
+`git clone https://github.com/waspmuc/dischwascher.git`
+
+* Navigate to `dischwascher/express/dishwascher/` and run `npm update`
+
+* Now start the app via `npm start`. Now you should see message outcomes like "success", when your dishwasher is turned on.
