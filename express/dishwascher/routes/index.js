@@ -11,15 +11,28 @@ router.get('/helloworld', function(req, res) {
     res.render('helloworld', { title: 'Hello, World!' });
 });
 
-/* GET Userlist page. */
-router.get('/wemoentries', function(req, res) {
+/* GET Hello World page. */
+router.get('/chart', function(req, res) {
     var db = req.db;
     var collection = db.get('usercollection');
-    var cursor = collection.find({});
-    cursor.each(console.log("Element"));
 
     collection.find({},{},function(e,docs){
         console.log("docs are: " + docs);
+        console.log(JSON.parse(docs))
+        console.log("error is: " + e)
+        res.send("test")
+        });
+});
+
+/* GET Userlist page. */
+router.get('/wemoentries', function(req, res) {
+    var db = req.db;
+
+    var collection = db.get('usercollection');
+
+    collection.find({},{},function(e,docs){
+        console.log("docs are: " + docs);
+        console.log(JSON.parse(docs))
         console.log("error is: " + e)
         res.render('wemoentries', {
             "wemoentries" : docs
