@@ -24,8 +24,8 @@ router.get('/chart', function(req, res) {
         });
 });
 
-/* GET Userlist page. */
-router.get('/wemoentries', function(req, res) {
+/* GET Userlist page.
+router.get('/test', function(req, res) {
     var db = req.db;
 
     var collection = db.get('usercollection');
@@ -39,4 +39,18 @@ router.get('/wemoentries', function(req, res) {
         });
     });
 });
+ NOT WORKING */
+
+
+/* GET Userlist page. */
+router.get('/wemoentries', function(req, res) {
+    var db = req.db;
+    var collection = db.get('usercollection');
+
+    collection.find({},{},function(e,docs){
+        console.log("docs are: " + docs);
+        res.status(200).json({'usercollection' : docs});
+    });
+});
+
 module.exports = router;
