@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Request JSON Test</title>
+</head>
+<body>
+<div id="show-free" style="display:none">
+    <img src="images/free.jpg" alt="Free" height="50%">
+</div>
+<div id="show-busy" style="display:none">
+    <img src="images/busy.jpg" alt="Busy" height="50%">
+</div>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        (function worker() {
+            $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) { //ToDo: http://192.168.233.18:5000/api/environment
+                if(data.id == 2){ //if busy ToDo: Check if power consumption is greater than x: if(data.wemodischwascher.currentpower > 100)
+                    console.log(data.id);
+                    $("#show-free").hide();
+                    $("#show-busy").show();
+                }
+                else {
+                    $("#show-free").show();
+                    $("#show-busy").hide();
+                }
+                setTimeout(worker, 5000);
+            });
+        })();
+    });
+</script>
+</body>
+</html>
