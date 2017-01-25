@@ -23,12 +23,12 @@
         (function worker() {
             $.getJSON('http://192.168.233.18:5000/api/environment', function (data) {
                 if(data.wemodischwascher.currentpower > 1000){ //busy if > 1 Watt
-                    console.log("Dishwasher is on with current power " + data.wemodischwascher.currentpower + "Milliwatt");
+                    console.log("Dishwasher is on with current power " + data.wemodischwascher.currentpower + " Milliwatt");
                     $("#show-free").hide();
                     $("#show-busy").show();
                 }
                 else {
-                    console.log("Dishwasher is not runnning with current power " + data.wemodischwascher.currentpower + "Milliwatt");
+                    console.log("Dishwasher is not runnning with current power " + data.wemodischwascher.currentpower + " Milliwatt");
                     $("#show-free").show();
                     $("#show-busy").hide();
                 }
