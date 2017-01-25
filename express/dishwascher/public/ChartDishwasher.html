@@ -30,7 +30,7 @@
             $.each(data.usercollection, function (i, item) {
                 if (item.wemodischwascher.currentpower > 0) {
                     if (i % 60 == 0) {
-                        var power = item.wemodischwascher.currentpower / 10000;
+                        var power = item.wemodischwascher.currentpower / 1000;
                         console.log("Data is: " + power  + " Watt, " + item.wemodischwascher.createdAt);
                         wemoSeries.push(power);
                         var dateMonthAsWord = moment(item.wemodischwascher.createdAt).format('hh:mm');
