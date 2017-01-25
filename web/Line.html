@@ -25,11 +25,11 @@
 
         $(document).ready(function () {
             i++;
-            $.getJSON("http://localhost:5000/api/environment", function (data) {
+            $.getJSON("http://192.168.233.18:3000/wemoentries", function (data) {
 
                 wemoJson = (JSON.stringify(data));
                 parseddata = $.parseJSON(wemoJson);
-                var currentPower = data["WeMo Insight Wasp"]["currentpower"]
+                var currentPower = data["wemodischwascher"]["currentpower"]
                 currentPower = currentPower / 1000
                 currentPower = Math.round(currentPower)
                 var time = moment().format("h:mm:ss").toString();
