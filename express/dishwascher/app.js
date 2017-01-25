@@ -78,7 +78,7 @@ try {
                     wemoresponse.wemodischwascher.createdAt = new Date();
 
 
-                    if (wemoresponse.wemodischwascher.currentpower > 200) {
+                    if (wemoresponse.wemodischwascher.currentpower > 800) {
                         if (firstRun == true) {
                             console.log("Creating new Collection for MongoDB")
                             now = new Date();
