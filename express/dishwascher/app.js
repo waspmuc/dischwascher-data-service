@@ -17,7 +17,7 @@ var CronJob = require('cron').CronJob;
 var http = require("http");
 
 var options = {
-    hostname: '192.168.40.254'
+    hostname: '192.168.233.18' //IP@home
     , port: '5000'
     , path: '/api/environment'
     , method: 'GET'
@@ -78,7 +78,7 @@ try {
                     wemoresponse.wemodishwasher.createdAt = new Date();
 
 
-                    if (wemoresponse.wemodishwasher.currentpower > 200) {
+                    if (wemoresponse.wemodischwascher.currentpower > 200) {
                         if (firstRun == true) {
                             console.log("Creating new Collection for MongoDB")
                             now = new Date();
