@@ -29,7 +29,7 @@ router.get('/chart', function(req, res) {
 router.get('/test', function(req, res) {
     var db = req.db;
 
-    var collection = db.get('usercollection');
+    var collection = db.get('wemorecord_25.1.2017_9:51');
 
     collection.find({},{},function(e,docs){
         console.log("docs are: " + docs);
@@ -46,11 +46,12 @@ router.get('/test', function(req, res) {
 /* GET Userlist page. */
 router.get('/wemoentries', function(req, res) {
     var db = req.db;
-    var collection = db.get('usercollection');
+    var collection = db.get('wemorecord_25.1.2017_9:51');
 
-    collection.find({},{}).toArray(function(err, docs){
+    /*collection.find({},{}).toArray(function(err, docs){
         console.log(docs.length);
     });
+    */
 
 
     /*var cursor = collection.find();
@@ -67,11 +68,11 @@ router.get('/wemoentries', function(req, res) {
     */
 
 
-    /*collection.find({},{},function(e,docs){
+    collection.find({},{},function(e,docs){
         //console.log("docs are: " + docs);
         res.status(200).json({'usercollection' : docs});
     });
-    */
+    
 });
 
 module.exports = router;
