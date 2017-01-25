@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/test');
+var db = monk('localhost:27017/wemo');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -75,7 +75,7 @@ try {
                 try {
                     var wemoresponse = JSON.parse(data)
 
-                    wemoresponse.wemodishwasher.createdAt = new Date();
+                    wemoresponse.wemodischwascher.createdAt = new Date();
 
 
                     if (wemoresponse.wemodischwascher.currentpower > 200) {
