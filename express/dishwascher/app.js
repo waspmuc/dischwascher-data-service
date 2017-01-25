@@ -84,18 +84,16 @@ try {
                             now = new Date();
                             firstRun = false;
                         }
-                        console.log(now);
+                        //console.log(now);
                         var collection = db.get('wemorecord_' + now.getDate() + "." + (now.getMonth() + 1) + "." + now.getFullYear() + "_" + now.getHours() + ":" + now.getMinutes());
                         collection.insert(
                             wemoresponse
                             , function (err, doc) {
                                 if (err) {
-                                    // If it failed, return error
                                     console.log("There was a problem adding the information to the database." + err);
 
                                 }
                                 else {
-                                    // And forward to success page
                                     console.log("success");
                                 }
                             });
