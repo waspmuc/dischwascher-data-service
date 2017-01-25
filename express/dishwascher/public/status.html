@@ -15,8 +15,8 @@
 <script>
     $(document).ready(function () {
         (function worker() {
-            $.getJSON('https://jsonplaceholder.typicode.com/posts/1', function (data) { //ToDo: http://192.168.233.18:5000/api/environment
-                if(data.id == 2){ //if busy ToDo: Check if power consumption is greater than x: if(data.wemodischwascher.currentpower > 100)
+            $.getJSON('http://192.168.233.18:5000/api/environment', function (data) {
+                if(data.wemodischwascher.currentpower > 1000){ //busy if > 1 Watt
                     console.log(data.id);
                     $("#show-free").hide();
                     $("#show-busy").show();

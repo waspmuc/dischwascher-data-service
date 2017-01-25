@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const util = require('util')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -47,10 +48,30 @@ router.get('/wemoentries', function(req, res) {
     var db = req.db;
     var collection = db.get('usercollection');
 
-    collection.find({},{},function(e,docs){
-        console.log("docs are: " + docs);
+    collection.find({},{}).toArray(function(err, docs){
+        console.log(docs.length);
+    });
+
+
+    /*var cursor = collection.find();
+
+
+    // Execute the each command, triggers for each document
+    cursor.each(function(err, item) {
+        //console.log(util.inspect(item, false, null));
+        var array = new Array();
+        array = JSON.stringify(item);
+        console.log("Array is: ", array);
+        //console.log("Item is: " + item);
+    });
+    */
+
+
+    /*collection.find({},{},function(e,docs){
+        //console.log("docs are: " + docs);
         res.status(200).json({'usercollection' : docs});
     });
+    */
 });
 
 module.exports = router;
