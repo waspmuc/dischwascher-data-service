@@ -3,13 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>Dishwasher Monitor</title>
+    <style>
+        .fit{
+            max-width: 50%;
+            max-height: 50%;
+        }
+    </style>
 </head>
 <body>
 <div id="show-free" style="display:none">
-    <img src="images/free.jpg" alt="Free" height="25%">
+    <img src="images/free.jpg" alt="Free" class="fit">
 </div>
 <div id="show-busy" style="display:none">
-    <img src="images/busy.jpg" alt="Busy" height="25%">
+    <img src="images/busy.jpg" alt="Busy" class="fit">
 </div>
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script>
