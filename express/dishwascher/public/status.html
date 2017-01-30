@@ -21,19 +21,29 @@
 <script>
     $(document).ready(function () {
         (function worker() {
-            $.getJSON('http://192.168.233.18:5000/api/environment', function (data) {
-                if(data.wemodischwascher.currentpower > 1000){ //busy if > 1 Watt
-                    console.log("Dishwasher is on with current power " + data.wemodischwascher.currentpower + " Milliwatt");
-                    $("#show-free").hide();
-                    $("#show-busy").show();
+
+            $.ajax({
+                url: 'http://192.168.233.18:5000/api/environment',
+                dataType: 'json',
+                timeout: 1000,
+                success: function( data ) {
+                    console.log( "SUCCESS:  " + data );
+                    if(data.wemodischwascher.currentpower > 1000){ //busy if > 1 Watt
+                        console.log("Dishwasher is on with current power " + data.wemodischwascher.currentpower + " Milliwatt");
+                        $("#show-free").hide();
+                        $("#show-busy").show();
+                    }
+                    else {
+                        console.log("Dishwasher is not runnning with current power " + data.wemodischwascher.currentpower + " Milliwatt");
+                        $("#show-free").show();
+                        $("#show-busy").hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Request error: " + status);
                 }
-                else {
-                    console.log("Dishwasher is not runnning with current power " + data.wemodischwascher.currentpower + " Milliwatt");
-                    $("#show-free").show();
-                    $("#show-busy").hide();
-                }
-                setTimeout(worker, 5000);
             });
+            setTimeout(worker, 1000);
         })();
     });
 </script>
