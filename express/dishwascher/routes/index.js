@@ -29,7 +29,7 @@ router.get('/chart', function(req, res) {
 router.get('/test', function(req, res) {
     var db = req.db;
 
-    var collection = db.get('wemorecord_25.1.2017_9:51');
+    var collection = db.get('wemorecord_25.1.2017_20:11');
 
     collection.find({},{},function(e,docs){
         console.log("docs are: " + docs);
