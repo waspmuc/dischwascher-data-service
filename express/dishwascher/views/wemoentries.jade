@@ -5,4 +5,5 @@ block content
         Wemoentries
     ul
         each entry in wemoentries
-            li= "Date: " + entry.wemodishwasher.createdAt + " Power: " + entry.wemodishwasher.currentpower + " kWh"
+            //li= "Date: " + entry.wemodishwasher.createdAt + " Power: " + entry.wemodishwasher.currentpower + " kWh"
+            li= entry.wemodishwasher.toString()
