@@ -12,6 +12,15 @@
   	   margin-right: auto;
 	   margin-top: 20px;
         }
+        .loader{
+           width: 20%;
+           heigth: auto;
+           display: block;
+           margin-left: auto;
+           margin-right: auto;
+           margin-top: 250px;
+        }
+
     </style>
 </head>
 <body>
@@ -21,10 +30,15 @@
 <div id="show-busy" style="display:none">
     <img src="images/busy.jpg" alt="Busy" class="fit">
 </div>
+<div id="loading" style="display:block">
+    <img src="images/connecting.gif" width="200" alt="Busy" class="loader">
+</div>
+
 <script src="lib/jquery-3.1.1.js"></script>
 <script>
     $(document).ready(function () {
         (function worker() {
+
 
             $.ajax({
                 url: 'http://localhost/api/device/wemodischwascher',
@@ -37,6 +51,7 @@
 		    'Access-Control-Allow-Methods' : 'GET',               
 		 },
                 success: function( data ) {
+                    $("#loading").hide();
                     if(data.currentpower > 750){ //busy if > 1 Watt
                         console.log("Dishwasher is on with current power " + data.currentpower + " Milliwatt");
                         $("#show-free").hide();
@@ -49,10 +64,14 @@
                     }
                 },
                 error: function(xhr, status, error) {
+		    $("#loading").show();
+                    $("#show-free").hide();
+                    $("#show-busy").hide();
+
                     console.error("Request error: " + status);
                 }
             });
-            setTimeout(worker, 1000);
+            setTimeout(worker, 5000);
         })();
     });
 </script>
