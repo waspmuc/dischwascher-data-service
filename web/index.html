@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Dishwasher Monitor</title>
+    <style>
+        .fit{
+	   width: 73%;
+	   heigth: auto;
+	   display: block;
+ 	   margin-left: auto;
+  	   margin-right: auto;
+	   margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="show-free" style="display:none">
+    <img src="images/free.jpg" alt="Free" class="fit">
+</div>
+<div id="show-busy" style="display:none">
+    <img src="images/busy.jpg" alt="Busy" class="fit">
+</div>
+<script src="lib/jquery-3.1.1.js"></script>
+<script>
+    $(document).ready(function () {
+        (function worker() {
+
+            $.ajax({
+                url: 'http://localhost/api/device/wemodischwascher',
+                dataType: 'json',
+                timeout: 10000,
+	        method: 'GET',
+                crossDomain: true,
+	        headers: {
+                    'Access-Control-Allow-Origin' : '*',
+		    'Access-Control-Allow-Methods' : 'GET',               
+		 },
+                success: function( data ) {
+                    if(data.currentpower > 750){ //busy if > 1 Watt
+                        console.log("Dishwasher is on with current power " + data.currentpower + " Milliwatt");
+                        $("#show-free").hide();
+                        $("#show-busy").show();
+                    }
+                    else {
+                        console.log("Dishwasher is not runnning with current power " + data.currentpower + " Milliwatt");
+                        $("#show-free").show();
+                        $("#show-busy").hide();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Request error: " + status);
+                }
+            });
+            setTimeout(worker, 1000);
+        })();
+    });
+</script>
+</body>
+</html>
